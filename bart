@@ -81,10 +81,10 @@ async function controlador() {
 
         if (arrayBtc[i] > btcArriba) {
                 console.log("Posible Bart subida brusca");
-                fetch('https://api.telegram.org/bot958705847:AAEeJe8NOXUrRJCK3Jj_SJUqffJOLH1mwts/sendMessage?chat_id=-1001221297377&text=Posible_Bart_subida_brusca');
+//                fetch();
         } else if (arrayBtc[i] < btcAbajo) {
                 console.log("Posible Bart bajada brusca");
-                fetch('https://api.telegram.org/bot958705847:AAEeJe8NOXUrRJCK3Jj_SJUqffJOLH1mwts/sendMessage?chat_id=-1001221297377&text=Posible_Bart_bajada_brusca');
+//                fetch();
         }
         console.log();
 }
