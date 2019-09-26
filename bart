@@ -1,40 +1,20 @@
 const fetch = require('node-fetch');
 
+var btc_price;
+btcPrice();
+
 arrayBtc = new Array(10);
 
-for (a=0; a<arrayBtc.length; a++){
-        arrayBtc[a] = 0;
-}
-
-var btc_price = 0;
 var mediaBtc;
 var i=-1;
 var btcArriba;
 var btcAbajo;
 
-console.log("Encendiendo... no tenga en cuenta las proximas 10 notificaciones...");
-
-async function bnbPrice() {
-        let bnb_price_res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BNBUSDT');
-        bnb_price_res = await bnb_price_res.json();
-        const bnb_price = bnb_price_res.price
-        console.log("Precio BNB/USD: "+bnb_price)
+for (a=0; a<arrayBtc.length; a++){
+        arrayBtc[a] = btc_price;
 }
 
-async function btcPrice() {
-        let btc_price_res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
-        btc_price_res = await btc_price_res.json();
-        btc_price = btc_price_res.price
-}
-
-async function xrpPrice() {
-        let xrp_price_res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT');
-        xrp_price_res = await xrp_price_res.json();
-        const xrp_price = xrp_price_res.price
-        console.log("Precio XRP/USD: "+xrp_price)
-}
-
-setInterval(controlador,60000);
+setInterval(controlador,1000);
 
 async function controlador() {
 
@@ -74,14 +54,15 @@ async function controlador() {
         }
         mediaBtc = mediaBtc / arrayBtc.length;
         console.log("Media: "+mediaBtc);
-        btcArriba = mediaBtc * 1.1;
-        btcAbajo = mediaBtc * 0.9;
+        btcArriba = mediaBtc * 1.05;
+        btcAbajo = mediaBtc * 0.95;
         console.log("arriba: "+ btcArriba);
         console.log("abajo: "+ btcAbajo);
 
         if (arrayBtc[i] > btcArriba) {
                 console.log("Posible Bart subida brusca");
 //                fetch();
+
         } else if (arrayBtc[i] < btcAbajo) {
                 console.log("Posible Bart bajada brusca");
 //                fetch();
@@ -89,3 +70,8 @@ async function controlador() {
         console.log();
 }
 
+async function btcPrice() {
+        let btc_price_res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
+        btc_price_res = await btc_price_res.json();
+        btc_price = btc_price_res.price
+}
