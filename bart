@@ -1,3 +1,21 @@
+/*					FASE 1
+
+El programa va a detectar un cambio brusco sobre la media calculada en x tiempo anterior
+
+Valor de bart 0= apagado	1=ha subido, tiene que bajar	2=ha bajado, tiene que subir
+*/
+
+/*					FASE 2
+
+El cambio para generar el bart completo sera en las proximas 4-8 horas
+
+Una vez se produce el cambio brusco ha de mantenerse en casi horizontal. Si bart=1 tiene que
+bajar ligeramente la media. Si bart=2 tiene que subir ligeramente la media
+
+Si pasan 10 horas cancelamos bart
+
+*/
+
 const fetch = require('node-fetch');
 
 var btc_price;
@@ -14,9 +32,11 @@ for (a=0; a<arrayBtc.length; a++){
         arrayBtc[a] = btc_price;
 }
 
-setInterval(controlador,1000);
+var bart = 0;
 
-async function controlador() {
+setInterval(fase1,60000);
+
+async function fase1() {
 
         if (i == 10){
                 i = 0;
@@ -62,11 +82,14 @@ async function controlador() {
         if (arrayBtc[i] > btcArriba) {
                 console.log("Posible Bart subida brusca");
 //                fetch();
-
+				bart = 1;
+				// llamada a fase2
         } else if (arrayBtc[i] < btcAbajo) {
                 console.log("Posible Bart bajada brusca");
 //                fetch();
-        }
+				bart = 2;
+				// llamada a fase2
+			}
         console.log();
 }
 
@@ -74,4 +97,8 @@ async function btcPrice() {
         let btc_price_res = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT');
         btc_price_res = await btc_price_res.json();
         btc_price = btc_price_res.price
+}
+
+async function fase2(){
+		
 }
